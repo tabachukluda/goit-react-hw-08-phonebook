@@ -1,32 +1,21 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { contactsActions, contactsSelectors } from 'redux/contacts';
-import css from './Filter.module.css';
+import { Label, Input, TitleFilter} from './Filter.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { filter } from 'redux/contacts/contactsSlice';
+import { getFilter } from 'redux/contacts/contactsSelectors';
 
 const Filter = () => {
-    const dispatch = useDispatch();
-    const filter = useSelector((state) => state.contacts.filter);
-    const contacts = useSelector(contactsSelectors.getContacts);
+  const dispatch = useDispatch();
+  const filterName = useSelector(getFilter);
 
+    const onChangeFilter = evt => {
+    dispatch(filter(evt.currentTarget.value.trim()));
+  }
     return (
-    <div className={css.container}>
-        <label className={css.filterLabel} htmlFor="filterInput">
-        Find contacts by Name
-        </label>
-        <input
-        id="filterInput"
-        className={css.filterName}
-        type="text"
-        name="filter"
-        placeholder="Enter filter"
-        value={filter}
-        onChange={e =>
-                dispatch(contactsActions.filterContact(e.target.value))
-                }
-        aria-label="Filter contacts by name"
-        />
-    </div>
+        <Label htmlFor="" value={filterName}>
+            <TitleFilter>Find contacts by name</TitleFilter>
+            <Input type="text" onChange={onChangeFilter} placeholder="Enter search name" />
+        </Label>
     );
-};
+}
 
 export default Filter;

@@ -1,33 +1,43 @@
-import { useDispatch, useSelector } from 'react-redux';
-import css from './ContactList.module.css';
-import { deleteContact } from 'redux/contacts/contacts-operations';
+import ContactItem from '../ContactItem/ContactItem';
+import React from 'react';
+import Loader from '../Loader/Loader';
+import { List, Error } from './ContactList.styled';
+import { useSelector} from 'react-redux';
+import { useFetchContactsQuery} from 'redux/contacts/contactsApi';
+import { getFilter } from 'redux/contacts/contactsSelectors';
 
 
 const ContactList = () => {
-    const dispatch = useDispatch();
-    const contacts = useSelector((state) => state.contacts.items);
+    const { data: contacts, error, isLoading } = useFetchContactsQuery();
 
-    if (contacts.length === 0) {
-    return <p className={css.noContacts}>No contacts to display.</p>;
-    }
+    const filter = useSelector(getFilter);
+
+    const filterContacts = () => {
+    return (
+        contacts &&
+        contacts.filter(contact =>
+        contact.name.toLowerCase().includes(filter.toLowerCase())
+        )
+    );
+    };
+
+    const contactList = filterContacts();
+    const renderContacts = contacts && contactList.length > 0;
 
     return (
-    <div className={css.wraperContactList}>
-        <ul className={css.contactList}>
-        {contacts.map((contact) => (
-            <li key={contact.id} className={css.contactListItem}>
-            {contact.name}: {contact.number}
-            <button
-                type="button"
-                className={css.contactListItemBtn}
-                onClick={() => dispatch(deleteContact(contact.id))}
-            >
-                Delete
-            </button>
-            </li>
+    <>
+        <List>
+        {renderContacts &&
+        contactList.map(({ id, name, number }) => (
+            <ContactItem id={id} key={id} name={name} number={number} />
         ))}
-        </ul>
-    </div>
+        {isLoading && <Loader />}
+        {error && (
+        <Error>Try adding phone details or contact your administrator</Error>
+        )}
+    </List>
+    </>
     );
 };
+
 export default ContactList;

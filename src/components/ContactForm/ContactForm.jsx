@@ -1,89 +1,97 @@
-import { useDispatch, useSelector } from 'react-redux';
-import css from './ContactForm.module.css';
-import React, { useState } from 'react';
-import { addContact } from 'redux/contacts/contacts-operations';
+import { useState } from 'react';
+import { Form, Label, Input, Button } from './ContactForm.styled';
+import toast, { Toaster } from 'react-hot-toast';
+import { nanoid } from 'nanoid'
+import { useFetchContactsQuery, useCreateContactMutation } from 'redux/contacts/contactsApi';
+import Loader from '../Loader/Loader';
+
+function ContactForm  () { 
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const { data: contacts, isLoading } = useFetchContactsQuery();
+  const [createContact] = useCreateContactMutation();
 
 
-const ContactForm = () => {
-    const dispatch = useDispatch();
-    const contacts = useSelector((state) => state.contacts.items);
-    const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
-
-    const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === 'name') {
-        setName(value);
-    } else if (name === 'number') {
-        setNumber(value);
+  const handleChange = e => {
+    const { name, value } = e.currentTarget;
+    
+    switch (name) {
+      case 'name': setName(value);
+        break;
+      case 'number': setNumber(value);
+        break;
+      default: return;
     }
-};
+  };
 
-    const onFormSubmit = (e) => {
+  const addContact = data => {
+    const contactName = contacts.map(contact => contact.name.toLowerCase());
+    const isAdding = contactName.includes(data.name.toLowerCase());
+
+    if (!isAdding) {
+      createContact(data);
+      reset();
+      toast.success(`😃 Contact, ${name} successfully added`);
+    } else {
+      toast.error(`😏${data.name} is already in contacts.`);
+    }
+  };
+
+    const handleSubmit = e => {
     e.preventDefault();
 
-    if (!isValidName(name) || !isValidNumber(number)) {
-        alert('Please provide a valid name and phone number.');
-        return;
-    }
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
 
-    if (contacts.some((contact) => contact.name.toLowerCase() === name.toLowerCase())) {
-        alert('Contact with this name already exists.');
-        return;
-    }
+    addContact(newContact);
+  };
 
-    dispatch(
-        addContact({
-        name,
-        number,
-        })
-    );
-
+    const reset = () => {
     setName('');
-        setNumber('');
-};
-
-    const isValidName = (name) => {
-    const nameRegex = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
-    return nameRegex.test(name);
-};
-
-    const isValidNumber = (number) => {
-    const numberRegex = /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
-    return numberRegex.test(number);
-};
+    setNumber('');
+  };
 
     return (
-    <form className={css.form} onSubmit={onFormSubmit}>
-        <label className={css.formLabel}>Name </label>
-        <input
-        className={css.formName}
-        type="text"
-        name="name"
-        pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        required
-        placeholder="Enter name"
-        value={name}
-        onChange={handleChange}
-        />
-        <label className={css.formLabel}>Number </label>
-        <input
-        className={css.formNumber}
-        type="tel"
-        name="number"
-        pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
-        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        required
-        placeholder="Enter phone number"
-        value={number}
-        onChange={handleChange}
-        />
-        <button className={css.formBtn} type="submit">
-        Add contact
-        </button>
-    </form>
+      <Form onSubmit={handleSubmit} autoComplete='off'>
+        <Label>
+          Name
+          <Input
+            type="text"
+            id="name_input"
+            name="name"
+            value={name}
+            onChange={handleChange}
+            placeholder="Enter your name..."
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+          />
+        </Label>
+
+        <Label>
+          Number
+          <Input
+            type="tel"
+            id="name_input"
+            name="number"
+            value={number}
+            onChange={handleChange}
+            placeholder="Enter your number..."
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required            
+          />
+        </Label>
+
+        <Button type="submit" >Add contact</Button>
+        <Toaster />
+        {isLoading && <Loader />}
+      </Form>
     );
+
 };
 
 export default ContactForm;
