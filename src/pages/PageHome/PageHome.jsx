@@ -8,7 +8,7 @@ function PageHome() {
     <>
       <PageHomeSection>
             <PageHomeTitle>Welcome </PageHomeTitle>
-        <PageHomeTitle2>Now you will exactly not forget your contacts!</PageHomeTitle2>
+        <PageHomeTitle2>YOUR MOST ESSENTIAL APPLICATION!</PageHomeTitle2>
         {!isLoggedIn && (      
           
           <PageHomeText> Please, <b>Sign up</b> or <b>Log in</b> to have access to the
