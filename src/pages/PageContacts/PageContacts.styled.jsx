@@ -3,8 +3,7 @@ import styled from '@emotion/styled'
 export const PageContactSection = styled.div`
   display: block;
   margin-top: 20px;
-  width: 100%;
-  max-width: 100%;
+  width: 600px;
   margin: 1em auto;
   padding: 1em;
   border-radius: 10px;
@@ -21,5 +20,4 @@ margin-bottom: 10px;
 font-weight: 700;
 color: var(--primaryTextColor);
 transition: all 0.5s ease;
-text-shadow: 2px 2px 4px blue;
 `;

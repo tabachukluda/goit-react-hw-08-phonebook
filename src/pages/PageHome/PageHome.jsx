@@ -7,7 +7,7 @@ function PageHome() {
   return (
     <>
       <PageHomeSection>
-            <PageHomeTitle>Welcome 👋</PageHomeTitle>
+            <PageHomeTitle>Welcome </PageHomeTitle>
         <PageHomeTitle2>Now you will exactly not forget your contacts!</PageHomeTitle2>
         {!isLoggedIn && (      
           

@@ -13,15 +13,8 @@ export const Item = styled.li`
   border-radius: 20px;
   cursor: pointer;
   font-size: 15px;
-  box-shadow: 17px 17px 84px 18px rgba(21, 15, 15, 0.2) inset;
-  background-color: #eb1d1d;;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-    &:focus {
-    transform: scale(1.1);
-  }
+  box-shadow: 17px 17px 84px 18px rgba(199, 200, 201) inset;
+  background-color:  #d7d8d9;    
 `;
 
 export const Button = styled.button`
@@ -33,8 +26,8 @@ export const Button = styled.button`
   cursor: pointer;
   font-size: 15px;
   box-shadow: 17px 17px 84px 18px rgba(21, 15, 15, 0.2) inset;
-  border: 2px solid rgb(252, 6, 6);
-  background-color: #eb1d1d;
+  border: 2px solid var(--primaryTextColor);
+  background-color: var(--secondaryTextColor);
 
   &:hover,
   &:focus {

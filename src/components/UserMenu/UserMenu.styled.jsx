@@ -13,10 +13,10 @@ margin-right: 20px;
 
 export const MenuTitle  = styled.p`
 font-size: 16px;
+font-weight: 500;
 margin: 0;
-color: var(--primaryTextColor);
+color: var(--accentColor);
 transition: all 0.5s ease;
-text-shadow: 2px 2px 4px blue;
 `;
 
 
@@ -32,8 +32,9 @@ width: 100px;
   cursor: pointer;
   font-size: 15px;
   box-shadow: 17px 17px 84px 18px rgba(21, 15, 15, 0.2) inset;
-  border: 2px solid rgb(252, 6, 6);
-  background-color: #eb1d1d;
+  border: 2px solid var(--primaryTextColor);
+  background-color: var(--secondaryTextColor);
+
 
   &:hover,
   &:focus {

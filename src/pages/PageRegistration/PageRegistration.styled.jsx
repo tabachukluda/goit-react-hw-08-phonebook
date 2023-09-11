@@ -2,12 +2,10 @@ import styled from '@emotion/styled'
 
 export const PageRegistrationSection = styled.section`
 display: block;
-  min-width: 420px;
-  max-width: 100%;
+  width: 300px;
   margin: 0 auto;
   margin-top: 20px;
   
-  width: 100%;
   margin: 1em auto;
   padding: 1em;
   border-radius: 10px;
@@ -15,9 +13,7 @@ display: block;
   box-shadow:
       inset rgba(0,0,0,.6) 0 -3px 8px,
       inset rgba(252,255,255,.7) 0 3px 8px,
-      rgba(0,0,0,.8) 0 3px 8px -3px;
-
-  
+      rgba(0,0,0,.8) 0 3px 8px -3px;  
 `;
 
 export const PageRegistrationTitle = styled.h2`

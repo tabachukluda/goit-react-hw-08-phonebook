@@ -2,13 +2,10 @@ import styled from '@emotion/styled'
 
 export const PageLoginSection = styled.section`
 display: block;
-  min-width: 420px;
-  max-width: 100%;
+  width: 350px;
   margin: 0 auto;
   margin-top: 20px;
-  /* padding: 20px; */
-
-  width: 100%;
+  
   margin: 1em auto;
   padding: 1em;
   border-radius: 10px;

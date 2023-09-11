@@ -1,11 +1,11 @@
 /* @import-normalize; */
 
 :root {
-  --primaryTextColor: #8fb9e3;
-  --secondaryTextColor: #0000d3;
-  --accentColor: #6200ff;
-  --bgColorform:#0000d3;
-  --bgColor: #d7d5da;
+  --primaryTextColor: #0a1c2f;
+  --secondaryTextColor: #363658;
+  --accentColor: #280781;
+  --bgColorform:#adadad;
+  --bgColor: #dccfee;
   --boxShadow: 17px 17px 84px 18px rgba(21, 15, 15, 0.2);
   --timingFn: cubic-bezier(0.4, 0, 0.2, 1);
 }
